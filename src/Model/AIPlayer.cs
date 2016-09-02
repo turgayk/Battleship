@@ -3,6 +3,7 @@ using Microsoft.VisualBasic;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using SwinGameSDK;
 
 /// <summary>
 /// The AIPlayer is a type of player. It can readomly deploy ships, it also has the
