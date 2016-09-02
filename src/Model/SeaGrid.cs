@@ -25,7 +25,7 @@ public class SeaGrid : ISeaGrid
 	/// <summary>
 	/// The sea grid has changed and should be redrawn.
 	/// </summary>
-	public event EventHandler ISeaGrid.Changed {
+	event EventHandler ISeaGrid.Changed {
 		add {
 			
 		}
