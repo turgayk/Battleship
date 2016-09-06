@@ -150,7 +150,7 @@ static class UtilityFunctions
 							fillColor = LARGE_HIT;
 						break;
 					case TileView.Sea:
-					case TileView.Ship:
+					//case TileView.Ship:
 						if (small)
 							fillColor = SMALL_SEA;
 						else
@@ -286,7 +286,7 @@ static class UtilityFunctions
 		List<Sprite> ended = new List<Sprite>();
 		foreach (Sprite s in _Animations) {
 			SwinGame.UpdateSprite(s);
-			if (s.animationHasEnded) {
+			if (SwinGame.SpriteAnimationHasEnded(s)) {
 				ended.Add(s);
 			}
 		}

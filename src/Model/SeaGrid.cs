@@ -18,21 +18,14 @@ public class SeaGrid : ISeaGrid
 	private const int _WIDTH = 10;
 
 	private const int _HEIGHT = 10;
-	private Tile[,] _GameTiles = new Tile[Width, Height];
+	private Tile[,] _GameTiles = new Tile[_WIDTH, _HEIGHT];
 	private Dictionary<ShipName, Ship> _Ships;
 
 	private int _ShipsKilled = 0;
 	/// <summary>
 	/// The sea grid has changed and should be redrawn.
 	/// </summary>
-	event EventHandler ISeaGrid.Changed {
-		add {
-			
-		}
-		remove {
-			
-		}
-	}
+	public event EventHandler Changed;
 
 	/// <summary>
 	/// The width of the sea grid.
@@ -109,7 +102,7 @@ public class SeaGrid : ISeaGrid
 	/// <param name="direction">the direction the ship is going</param>
 	public void MoveShip(int row, int col, ShipName ship, Direction direction)
 	{
-		Ship newShip = _Ships(ship);
+		Ship newShip = _Ships[ship];
 		newShip.Remove();
 		AddShip(row, col, direction, newShip);
 	}
@@ -130,7 +123,7 @@ public class SeaGrid : ISeaGrid
 			int dRow = 0;
 			int dCol = 0;
 
-			if (direction == direction.LeftRight) {
+			if (direction == Direction.LeftRight) {
 				dRow = 0;
 				dCol = 1;
 			} else {

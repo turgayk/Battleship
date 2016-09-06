@@ -11,6 +11,7 @@ using System.Collections.Generic;
 public class SeaGridAdapter : ISeaGrid
 {
 
+  public event EventHandler Changed;
 
 	private SeaGrid _MyGrid;
 	/// <summary>
@@ -92,10 +93,3 @@ public class SeaGridAdapter : ISeaGrid
 	#endregion
 
 }
-
-//=======================================================
-//Service provided by Telerik (www.telerik.com)
-//Conversion powered by NRefactory.
-//Twitter: @telerik
-//Facebook: facebook.com/telerik
-//=======================================================
