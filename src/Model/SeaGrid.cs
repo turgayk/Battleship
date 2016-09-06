@@ -65,8 +65,8 @@ public class SeaGrid : ISeaGrid
 	/// <param name="x">x coordinate of the tile</param>
 	/// <param name="y">y coordiante of the tile</param>
 	/// <returns></returns>
-	public TileView Item {
-		get { return _GameTiles[x, y].View; }
+	public TileView Item(int x, int y) {
+		return _GameTiles[x, y].View;
 	}
 
 	/// <summary>
@@ -202,10 +202,3 @@ public class SeaGrid : ISeaGrid
 		}
 	}
 }
-
-//=======================================================
-//Service provided by Telerik (www.telerik.com)
-//Conversion powered by NRefactory.
-//Twitter: @telerik
-//Facebook: facebook.com/telerik
-//=======================================================
