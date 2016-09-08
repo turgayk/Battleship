@@ -18,16 +18,11 @@ static class GameLogic
 		SwinGame.PlayMusic(GameResources.GameMusic("Background"));
 
 		//Game Loop
-		Console.WriteLine("Starting game");
 		do {
-			Console.WriteLine("Doing loop");
 			GameController.HandleUserInput();
 			GameController.DrawScreen();
-			Console.WriteLine("Finished loop");
 		} while (!(SwinGame.WindowCloseRequested() == true | GameController.CurrentState == GameState.Quitting));
 
-		Console.WriteLine("Quitting");
-		
 		SwinGame.StopMusic();
 
 		//Free Resources and Close Audio, to end the program.
