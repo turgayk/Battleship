@@ -156,17 +156,17 @@ public static class GameResources
 
 	private static void ShowLoadingScreen()
 	{
-		_Background = SwinGame.LoadBitmap(SwinGame.PathToResource("SplashBack.png", ResourceKind.BitmapResource));
+		_Background = SwinGame.LoadBitmap("SplashBack.png");
 		SwinGame.DrawBitmap(_Background, 0, 0);
 		SwinGame.RefreshScreen();
 		SwinGame.ProcessEvents();
 
-		_Animation = SwinGame.LoadBitmap(SwinGame.PathToResource("SwinGameAni.jpg", ResourceKind.BitmapResource));
-		_LoadingFont = SwinGame.LoadFont(SwinGame.PathToResource("arial.ttf", ResourceKind.FontResource), 12);
-		_StartSound = Audio.LoadSoundEffect(SwinGame.PathToResource("SwinGameStart.ogg", ResourceKind.SoundResource));
+		_Animation = SwinGame.LoadBitmap("SwinGameAni.jpg");
+		_LoadingFont = SwinGame.LoadFont("arial.ttf", 12);
+		_StartSound = Audio.LoadSoundEffect("SwinGameStart.ogg");
 
-		_LoaderFull = SwinGame.LoadBitmap(SwinGame.PathToResource("loader_full.png", ResourceKind.BitmapResource));
-		_LoaderEmpty = SwinGame.LoadBitmap(SwinGame.PathToResource("loader_empty.png", ResourceKind.BitmapResource));
+		_LoaderFull = SwinGame.LoadBitmap("loader_full.png");
+		_LoaderEmpty = SwinGame.LoadBitmap("loader_empty.png");
 
 		PlaySwinGameIntro();
 	}
@@ -235,17 +235,17 @@ public static class GameResources
 
 	private static void NewFont(string fontName, string filename, int size)
 	{
-		_Fonts.Add(fontName, SwinGame.LoadFont(SwinGame.PathToResource(filename, ResourceKind.FontResource), size));
+		_Fonts.Add(fontName, SwinGame.LoadFont(filename, size));
 	}
 
 	private static void NewImage(string imageName, string filename)
 	{
-		_Images.Add(imageName, SwinGame.LoadBitmap(SwinGame.PathToResource(filename, ResourceKind.BitmapResource)));
+		_Images.Add(imageName, SwinGame.LoadBitmap(filename));
 	}
 
 	private static void NewTransparentColorImage(string imageName, string fileName, Color transColor)
 	{
-		_Images.Add(imageName, SwinGame.LoadBitmap(SwinGame.PathToResource(fileName, ResourceKind.BitmapResource), true, transColor));
+		_Images.Add(imageName, SwinGame.LoadBitmap(fileName, true, transColor));
 	}
 
 	private static void NewTransparentColourImage(string imageName, string fileName, Color transColor)
@@ -255,12 +255,12 @@ public static class GameResources
 
 	private static void NewSound(string soundName, string filename)
 	{
-		_Sounds.Add(soundName, Audio.LoadSoundEffect(SwinGame.PathToResource(filename, ResourceKind.SoundResource)));
+		_Sounds.Add(soundName, Audio.LoadSoundEffect(filename));
 	}
 
 	private static void NewMusic(string musicName, string filename)
 	{
-		_Music.Add(musicName, Audio.LoadMusic(SwinGame.PathToResource(filename, ResourceKind.SoundResource)));
+		_Music.Add(musicName, Audio.LoadMusic(filename));
 	}
 
 	private static void FreeFonts()
