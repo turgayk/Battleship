@@ -3,6 +3,7 @@ using Microsoft.VisualBasic;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using SwinGameSDK;
 
 /// <summary>
 /// The AIPlayer is a type of player. It can readomly deploy ships, it also has the
@@ -54,23 +55,18 @@ public abstract class AIPlayer : Player
 		/// <summary>
 		/// Check if two locations are equal
 		/// </summary>
-		/// <param name="this">location 1</param>
-		/// <param name="other">location 2</param>
-		/// <returns>true if location 1 and location 2 are at the same spot</returns>
-		public static bool operator ==(Location @this, Location other)
-		{
-			return @this != null && other != null && @this.Row == other.Row && @this.Column == other.Column;
+		/// <param name="obj">value to compare with</param>
+		/// <returns>true if this location equals the other location</returns>
+		public override bool Equals(System.Object obj) {
+			Location other = obj as Location;
+			if (System.Object.ReferenceEquals(other, null)) {
+				return false;
+			}
+			return this.Row == other.Row && this.Column == other.Column;
 		}
-
-		/// <summary>
-		/// Check if two locations are not equal
-		/// </summary>
-		/// <param name="this">location 1</param>
-		/// <param name="other">location 2</param>
-		/// <returns>true if location 1 and location 2 are not at the same spot</returns>
-		public static bool operator !=(Location @this, Location other)
-		{
-			return @this == null || other == null || @this.Row != other.Row || @this.Column != other.Column;
+		
+		public override int GetHashCode() {
+			return _Row ^ _Column;
 		}
 	}
 
@@ -114,7 +110,7 @@ public abstract class AIPlayer : Player
 			result = _game.Shoot(row, column);
 			//take shot
 			ProcessShot(row, column, result);
-		} while (result.Value != ResultOfAttack.Miss && result.Value != ResultOfAttack.GameOver && !SwinGame.WindowCloseRequested);
+		} while (result.Value != ResultOfAttack.Miss && result.Value != ResultOfAttack.GameOver && !SwinGame.WindowCloseRequested());
 
 		return result;
 	}
@@ -127,7 +123,7 @@ public abstract class AIPlayer : Player
 		int i = 0;
 		for (i = 0; i <= 150; i++) {
 			//Dont delay if window is closed
-			if (SwinGame.WindowCloseRequested)
+			if (SwinGame.WindowCloseRequested())
 				return;
 
 			SwinGame.Delay(5);
