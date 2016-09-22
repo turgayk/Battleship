@@ -104,8 +104,9 @@ Usage()
 }
 
 RELEASE=""
+FAST=""
 
-while getopts chri:g:b:s: o
+while getopts chrfi:g:b:s: o
 do
     case "$o" in
     c)  CLEAN="Y" ;;
@@ -130,6 +131,7 @@ do
         ;;
     d)  RELEASE="Y" ;;
     i)  ICON="$OPTARG";;
+	f)  FAST="Y";;
     ?)  Usage
     esac
 done
@@ -261,8 +263,8 @@ doCompile()
         mkdir -p ${OUT_DIR}
     fi
     
-    if [ "$OS" = "$WIN" ]; then
-        "${GMCS_BIN}" ${GMCS_FLAGS} ${CS_FLAGS} -out:"${OUT_DIR}/${GAME_NAME}.exe" `find ${APP_PATH} -mindepth 2 -exec ${APP_PATH}/lib/cygpath -ma {} \; | grep [.]cs$` >> ${LOG_FILE}
+    if [ "$OS" = "$WIN" ] && [ -z "$FAST" ]; then
+        "${GMCS_BIN}" ${GMCS_FLAGS} ${CS_FLAGS} -out:"${OUT_DIR}/${GAME_NAME}.exe" `find ${APP_PATH} -mindepth 2 -not -path "./.git/*" -exec ${APP_PATH}/lib/cygpath -ma {} \; | grep [.]cs$` >> ${LOG_FILE}
     else
         "${GMCS_BIN}" ${GMCS_FLAGS} ${CS_FLAGS} -out:"${OUT_DIR}/${GAME_NAME}.exe" `find ${APP_PATH} -mindepth 2 | grep [.]cs$` >> ${LOG_FILE}
     fi
@@ -294,9 +296,9 @@ copyWithoutSVN()
     cd "${FROM_DIR}"
     
     # Create directory structure
-    find . -mindepth 1 -type d ! -path \*.svn\* -exec sh -c "if [ ! -d '${TO_DIR}/{}' ]; then mkdir -p '${TO_DIR}/{}'; fi" \;
+    find . -mindepth 1 -type d ! \( -path \*.svn\* -o -path \*.git\* \) -exec sh -c "if [ ! -d '${TO_DIR}/{}' ]; then mkdir -p '${TO_DIR}/{}'; fi" \;
     # Copy files and links
-    find . ! -path \*.svn\* ! -name \*.DS_Store ! -type d -exec cp -R -p {} "${TO_DIR}/{}"  \;
+    find . ! \( -path \*.svn\* -o -path \*.git\* \) ! -name \*.DS_Store ! -type d -exec cp -R -p {} "${TO_DIR}/{}"  \;
 }
 
 #
