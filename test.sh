@@ -16,10 +16,11 @@ fi
 # Step 2: Determine game name
 #
 APP_PATH=`echo $0 | awk '{split($0,patharr,"/"); idx=1; while(patharr[idx+1] != "") { if (patharr[idx] != "/") {printf("%s/", patharr[idx]); idx++ }} }'`
-APP_PATH=`cd "$APP_PATH"; pwd` 
+APP_PATH=`cd "$APP_PATH"; pwd`
 cd "$APP_PATH"
 
 GAME_NAME=${APP_PATH##*/}
+NUNIT_BIN="$APP_PATH/nunit/bin"
 
 if [ "$OS" = "$MAC" ]; then
     EXE_PATH=$APP_PATH/bin/Debug/${GAME_NAME}.app/Contents/MacOS/${GAME_NAME}
@@ -47,6 +48,11 @@ if [ ! -f "${EXE_PATH}" ]; then
     exit -1
 fi
 
-echo "Testing ${VERSION}"
+NUNIT=`which nunit3-console 2>> /dev/null`
+if [ -z "$NUNIT" ]; then
+	echo "Adding N-Unit to path"
+	export PATH="${PATH}:${NUNIT_BIN}"
+fi
 
+echo "Testing ${VERSION}"
 nunit3-console "${EXE_PATH}"
