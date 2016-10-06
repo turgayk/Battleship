@@ -16,25 +16,26 @@ static class DeploymentController
 	private const int SHIPS_HEIGHT = 90;
 
 	private const int SHIPS_WIDTH = 300;
-	private const int TOP_BUTTONS_TOP = 72;
+	public const int TOP_BUTTONS_TOP = 72;
 
-	private const int TOP_BUTTONS_HEIGHT = 46;
+	public const int TOP_BUTTONS_HEIGHT = 46;
 	private const int PLAY_BUTTON_LEFT = 693;
 
 	private const int PLAY_BUTTON_WIDTH = 80;
-	private const int UP_DOWN_BUTTON_LEFT = 410;
+	public const int UP_DOWN_BUTTON_LEFT = 410;
 
-	private const int LEFT_RIGHT_BUTTON_LEFT = 350;
+	public const int LEFT_RIGHT_BUTTON_LEFT = 350;
 	private const int RANDOM_BUTTON_LEFT = 547;
 
 	private const int RANDOM_BUTTON_WIDTH = 51;
 
-	private const int DIR_BUTTONS_WIDTH = 47;
+	public const int DIR_BUTTONS_WIDTH = 47;
 
 	private const int TEXT_OFFSET = 5;
-	private static Direction _currentDirection = Direction.UpDown;
+	public static Direction _currentDirection = Direction.UpDown;
 
 	private static ShipName _selectedShip = ShipName.Tug;
+	
 	/// <summary>
 	/// Handles user input for the Deployment phase of the game.
 	/// </summary>
@@ -70,13 +71,34 @@ static class DeploymentController
 
 			if (GameController.HumanPlayer.ReadyToDeploy & UtilityFunctions.IsMouseInRectangle(PLAY_BUTTON_LEFT, TOP_BUTTONS_TOP, PLAY_BUTTON_WIDTH, TOP_BUTTONS_HEIGHT)) {
 				GameController.EndDeployment();
-			} else if (UtilityFunctions.IsMouseInRectangle(UP_DOWN_BUTTON_LEFT, TOP_BUTTONS_TOP, DIR_BUTTONS_WIDTH, TOP_BUTTONS_HEIGHT)) {
-				_currentDirection = Direction.UpDown;
-			} else if (UtilityFunctions.IsMouseInRectangle(LEFT_RIGHT_BUTTON_LEFT, TOP_BUTTONS_TOP, DIR_BUTTONS_WIDTH, TOP_BUTTONS_HEIGHT)) {
-				_currentDirection = Direction.LeftRight;
-			} else if (UtilityFunctions.IsMouseInRectangle(RANDOM_BUTTON_LEFT, TOP_BUTTONS_TOP, RANDOM_BUTTON_WIDTH, TOP_BUTTONS_HEIGHT)) {
-				GameController.HumanPlayer.RandomizeDeployment();
+			} else {
+				AdjustShipDirectionFromButtons(UtilityFunctions.IsMouseInRectangle);
 			}
+		}
+	}
+	
+	/// <summary>
+	/// Tests if the mouse is inside a rectangle
+	/// <summary>
+	/// <remarks>
+	/// For internal use only
+	/// </remarks>
+	public delegate bool TestMouseRegion(int x, int y, int width, int height);
+	
+	/// <summary>
+	/// Updates which direction the next ship will face based on where the mouse is.
+	/// This function should only be used when the mouse button has been clicked.
+	/// <summary>
+	/// <remarks>
+	/// For internal use only
+	/// </remarks>
+	public static void AdjustShipDirectionFromButtons(TestMouseRegion mouseRegion) {
+		if (mouseRegion(UP_DOWN_BUTTON_LEFT, TOP_BUTTONS_TOP, DIR_BUTTONS_WIDTH, TOP_BUTTONS_HEIGHT)) {
+			_currentDirection = Direction.UpDown;
+		} else if (mouseRegion(LEFT_RIGHT_BUTTON_LEFT, TOP_BUTTONS_TOP, DIR_BUTTONS_WIDTH, TOP_BUTTONS_HEIGHT)) {
+			_currentDirection = Direction.LeftRight;
+		} else if (mouseRegion(RANDOM_BUTTON_LEFT, TOP_BUTTONS_TOP, RANDOM_BUTTON_WIDTH, TOP_BUTTONS_HEIGHT)) {
+			GameController.HumanPlayer.RandomizeDeployment();
 		}
 	}
 
