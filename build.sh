@@ -28,8 +28,9 @@ BIN_DIR="${APP_PATH}/bin"
 SRC_DIR="${APP_PATH}/src"
 LIB_DIR="${APP_PATH}/lib"
 LOG_FILE="${APP_PATH}/out.log"
+NUNIT_DIR="${APP_PATH}/nunit/bin/net-4.5"
 
-GMCS_FLAGS="-target:exe -r:./lib/SwinGame.dll" #" -r:Microsoft.VisualBasic"
+GMCS_FLAGS="-target:exe -r:./lib/SwinGame.dll -r:${NUNIT_DIR}/nunit.framework.dll" #" -r:Microsoft.VisualBasic"
 CS_FLAGS="-optimize+"
 SG_INC="-I${APP_PATH}/lib/"
 
@@ -278,6 +279,7 @@ doLinuxPackage()
 {
     echo "  ... Copying SwinGame Library"
     cp -R -p "./lib/SwinGame.dll" "${OUT_DIR}/"
+	cp -R -p "${NUNIT_DIR}"/*.dll "${OUT_DIR}"
     RESOURCE_DIR="${FULL_OUT_DIR}/Resources"
 }
 
@@ -285,9 +287,12 @@ doWindowsPackage()
 {
     RESOURCE_DIR=${FULL_OUT_DIR}/Resources
     
-    echo "  ... Copying libraries"
+    echo "  ... Copying SwinGame libraries"
     cp -p -f "${LIB_DIR}"/*.dll "${OUT_DIR}"
     cp -R -p "./lib/SwinGame.dll" "${OUT_DIR}"
+	
+	echo "  ... Copying nunit libraries"
+	cp -R -p "${NUNIT_DIR}"/*.dll "${OUT_DIR}"
 }
 
 copyWithoutSVN()
