@@ -50,8 +50,8 @@ public class Player : IEnumerable<Ship>
 				_Ships.Add(name, new Ship(name));
 			}
 		}
-
-		RandomizeDeployment();
+		AlignDeployment();
+		//RandomizeDeployment();
 	}
 
 	/// <summary>
@@ -178,28 +178,36 @@ public class Player : IEnumerable<Ship>
 	/// <returns>the result of the attack</returns>
 	internal AttackResult Shoot(int row, int col)
 	{
+		_shots += 1;
 		AttackResult result = default(AttackResult);
 		result = EnemyGrid.HitTile(row, col);
 
 		switch (result.Value) {
 			case ResultOfAttack.Destroyed:
-		
-			break;
-
 			case ResultOfAttack.Hit:
-			{
-				_hits += 100;
-				_shots += 1;
+				_hits += 1;
 				break;
-			}
 			case ResultOfAttack.Miss:
-			{
 				_misses += 1;
-				_shots += 1;
-				break;				
-			}
+				break;
 		}
+
 		return result;
+	}
+
+	public virtual void AlignDeployment(){
+		//Tug = 1,
+		//Submarine = 2,
+		//Destroyer = 3,
+		//Battleship = 4,
+		//AircraftCarrier = 5
+
+		PlayerGrid.MoveShip(0, 0, ShipName.Tug, Direction.LeftRight);
+		PlayerGrid.MoveShip(1, 0, ShipName.Submarine, Direction.LeftRight);
+		PlayerGrid.MoveShip(2, 0, ShipName.Destroyer, Direction.LeftRight);
+		PlayerGrid.MoveShip(3, 0, ShipName.Battleship, Direction.LeftRight);
+		PlayerGrid.MoveShip(4, 0, ShipName.AircraftCarrier, Direction.LeftRight);
+
 	}
 
 	public virtual void RandomizeDeployment()
@@ -208,7 +216,6 @@ public class Player : IEnumerable<Ship>
 		Direction heading = default(Direction);
 
 		//for each ship to deploy in shipist
-
 		foreach (ShipName shipToPlace in Enum.GetValues(typeof(ShipName))) {
 			if (shipToPlace == ShipName.None)
 				continue;
