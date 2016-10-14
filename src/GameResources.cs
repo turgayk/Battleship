@@ -30,8 +30,11 @@ public static class GameResources
 		NewImage("PlayButton", "deploy_play_button.png");
 		NewImage("RandomButton", "deploy_randomize_button.png");
 
-		//Ships
-		int i = 0;
+        NewImage("TransformButtonLight", "transform_light.png");
+        NewImage("TransformButtonDark", "transform_dark.png");
+
+        //Ships
+        int i = 0;
 		for (i = 1; i <= 5; i++) {
 			NewImage("ShipLR" + i, "ship_deploy_horiz_" + i + ".png");
 			NewImage("ShipUD" + i, "ship_deploy_vert_" + i + ".png");
@@ -80,6 +83,18 @@ public static class GameResources
 	{
 		return _Images[image];
 	}
+
+
+    /// <summary>
+    /// Changes Ship's Image
+    /// </summary>
+    /// <param name="imageName">Name of image</param>
+    /// <param name="fileName">Name of file</param>
+    public static void changeGameImage(string imageName, string fileName) {
+
+
+        _Images[imageName] = SwinGame.LoadBitmap(fileName);
+    }
 
 	/// <summary>
 	/// Gets an sound loaded in the Resources
@@ -242,6 +257,7 @@ public static class GameResources
 	{
 		_Images.Add(imageName, SwinGame.LoadBitmap(filename));
 	}
+
 
 	private static void NewTransparentColorImage(string imageName, string fileName, Color transColor)
 	{
