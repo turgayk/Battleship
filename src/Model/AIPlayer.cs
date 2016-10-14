@@ -73,6 +73,7 @@ public abstract class AIPlayer : Player
 
 	public AIPlayer(BattleShipsGame game) : base(game)
 	{
+		RandomizeDeployment();
 	}
 
 	/// <summary>
