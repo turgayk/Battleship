@@ -108,6 +108,7 @@ public class SeaGrid : ISeaGrid
 		AddShip(row, col, direction, newShip);
 	}
 
+
 	/// <summary>
 	/// AddShip add a ship to the SeaGrid
 	/// </summary>
