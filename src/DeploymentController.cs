@@ -14,19 +14,22 @@ static class DeploymentController
 	private const int SHIPS_TOP = 98;
 	private const int SHIPS_LEFT = 20;
 	private const int SHIPS_HEIGHT = 90;
-
 	private const int SHIPS_WIDTH = 300;
-	public const int TOP_BUTTONS_TOP = 72;
 
+    public const int TOP_BUTTONS_TOP = 72;
 	public const int TOP_BUTTONS_HEIGHT = 46;
-	private const int PLAY_BUTTON_LEFT = 693;
 
+    public const int LEFT_RIGHT_BUTTON_LEFT = 350;
+    public const int UP_DOWN_BUTTON_LEFT = 410;
+
+    public const int TRANSFORM_BUTTON_LEFT = 470;
+    public const int TRANSFORM_WIDTH = 60;
+    public static Boolean _transformBoolean = false;
+
+    private const int PLAY_BUTTON_LEFT = 693;
 	private const int PLAY_BUTTON_WIDTH = 80;
-	public const int UP_DOWN_BUTTON_LEFT = 410;
 
-	public const int LEFT_RIGHT_BUTTON_LEFT = 350;
 	private const int RANDOM_BUTTON_LEFT = 547;
-
 	private const int RANDOM_BUTTON_WIDTH = 51;
 
 	public const int DIR_BUTTONS_WIDTH = 47;
@@ -34,7 +37,8 @@ static class DeploymentController
 	private const int TEXT_OFFSET = 5;
 	public static Direction _currentDirection = Direction.UpDown;
 
-	private static ShipName _selectedShip = ShipName.Tug;
+
+    private static ShipName _selectedShip = ShipName.Tug;
 	
 	/// <summary>
 	/// Handles user input for the Deployment phase of the game.
@@ -99,8 +103,13 @@ static class DeploymentController
 			_currentDirection = Direction.LeftRight;
 		} else if (mouseRegion(RANDOM_BUTTON_LEFT, TOP_BUTTONS_TOP, RANDOM_BUTTON_WIDTH, TOP_BUTTONS_HEIGHT)) {
 			GameController.HumanPlayer.RandomizeDeployment();
-		}
-	}
+        }
+        else if (mouseRegion(TRANSFORM_BUTTON_LEFT, TOP_BUTTONS_TOP, TRANSFORM_WIDTH, TOP_BUTTONS_HEIGHT))
+        {
+
+            _transformBoolean = !_transformBoolean;
+        }
+    }
 
 	/// <summary>
 	/// The user has clicked somewhere on the screen, check if its is a deployment and deploy
@@ -154,8 +163,22 @@ static class DeploymentController
 			//SwinGame.DrawText("L/R", Color.Gray, GameFont("Menu"), LEFT_RIGHT_BUTTON_LEFT, TOP_BUTTONS_TOP)
 		}
 
-		//DrawShips
-		foreach (ShipName sn in Enum.GetValues(typeof(ShipName))) {
+        if (_transformBoolean == true)
+        {
+            SwinGame.DrawBitmap(GameResources.GameImage("TransformButtonLight"), TRANSFORM_BUTTON_LEFT, TOP_BUTTONS_TOP);
+            GameResources.changeGameImage("ShipLR5", "group_horiz.png");
+            GameResources.changeGameImage("ShipUD5", "group_vert.png");
+        }
+        else
+        {
+            SwinGame.DrawBitmap(GameResources.GameImage("TransformButtonDark"), TRANSFORM_BUTTON_LEFT, TOP_BUTTONS_TOP);
+            GameResources.changeGameImage("ShipLR5", "ship_deploy_horiz_5.png");
+            GameResources.changeGameImage("ShipUD5", "ship_deploy_vert_5.png");
+        }
+
+
+        //DrawShips
+        foreach (ShipName sn in Enum.GetValues(typeof(ShipName))) {
 			int i = 0;
 			i = ((int)sn) - 1;
 			if (i >= 0) {

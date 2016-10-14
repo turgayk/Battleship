@@ -208,7 +208,7 @@ public class Player : IEnumerable<Ship>
 		PlayerGrid.MoveShip(3, 0, ShipName.Battleship, Direction.LeftRight);
 		PlayerGrid.MoveShip(4, 0, ShipName.AircraftCarrier, Direction.LeftRight);
 
-	}
+    }
 
 	public virtual void RandomizeDeployment()
 	{
