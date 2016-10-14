@@ -8,7 +8,7 @@ using SwinGameSDK;
 /// <summary>
 /// The menu controller handles the drawing and user interactions
 /// from the menus in the game. These include the main menu, game
-/// menu and the settings m,enu.
+/// menu and the settings menu.
 /// </summary>
 
 static class MenuController
@@ -56,9 +56,9 @@ static class MenuController
 	private const int MAIN_MENU_TOP_SCORES_BUTTON = 2;
 
 	private const int MAIN_MENU_QUIT_BUTTON = 3;
-	private const int SETUP_MENU_EASY_BUTTON = 0;
-	private const int SETUP_MENU_MEDIUM_BUTTON = 1;
-	private const int SETUP_MENU_HARD_BUTTON = 2;
+	public const int SETUP_MENU_EASY_BUTTON = 0;
+	public const int SETUP_MENU_MEDIUM_BUTTON = 1;
+	public const int SETUP_MENU_HARD_BUTTON = 2;
 
 	private const int SETUP_MENU_EXIT_BUTTON = 3;
 	private const int GAME_MENU_RETURN_BUTTON = 0;
@@ -279,14 +279,14 @@ static class MenuController
 	/// The setup menu was clicked, perform the button's action.
 	/// </summary>
 	/// <param name="button">the button pressed</param>
-	private static void PerformSetupMenuAction(int button)
+	public static void PerformSetupMenuAction(int button)
 	{
 		switch (button) {
 			case SETUP_MENU_EASY_BUTTON:
-				GameController.SetDifficulty(AIOption.Hard);
+				GameController.SetDifficulty(AIOption.Easy);
 				break;
 			case SETUP_MENU_MEDIUM_BUTTON:
-				GameController.SetDifficulty(AIOption.Hard);
+				GameController.SetDifficulty(AIOption.Medium);
 				break;
 			case SETUP_MENU_HARD_BUTTON:
 				GameController.SetDifficulty(AIOption.Hard);

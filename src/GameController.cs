@@ -73,17 +73,7 @@ public class GameController
 		_theGame = new BattleShipsGame();
 
 		//create the players
-		switch (_aiSetting) {
-			case AIOption.Medium:
-				_ai = new AIMediumPlayer(_theGame);
-				break;
-			case AIOption.Hard:
-				_ai = new AIHardPlayer(_theGame);
-				break;
-			default:
-				_ai = new AIHardPlayer(_theGame);
-				break;
-		}
+		_ai = CreateAIPlayer(_aiSetting);
 
 		_human = new Player(_theGame);
 
@@ -93,11 +83,33 @@ public class GameController
 
 		AddNewState(GameState.Deploying);
 	}
+	
+	/// <summary>
+	/// Creates a new AI player based on the current setting
+	/// Returns the created ai
+	/// </summary>
+	public static AIPlayer CreateAIPlayer(AIOption setting) {
+		AIPlayer player = null;
+		switch (setting) {
+			case AIOption.Easy:
+				player = new AIEasyPlayer(_theGame);
+				break;
+			case AIOption.Medium:
+				player = new AIMediumPlayer(_theGame);
+				break;
+			case AIOption.Hard:
+				player = new AIHardPlayer(_theGame);
+				break;
+			default:
+				player = new AIHardPlayer(_theGame);
+				break;
+		}
+		return player;
+	}
 
 	/// <summary>
 	/// Stops listening to the old game once a new game is started
 	/// </summary>
-
 	private static void EndGame()
 	{
 		//RemoveHandler _human.PlayerGrid.Changed, AddressOf GridChanged
@@ -373,6 +385,15 @@ public class GameController
 	public static void SetDifficulty(AIOption setting)
 	{
 		_aiSetting = setting;
+	}
+	
+	/// <summary>
+	/// Gets the difficulty for the next level of the game.
+	/// </summary>
+	/// <param name="setting">the new difficulty level</param>
+	public static AIOption GetDifficulty()
+	{
+		return _aiSetting;
 	}
 
 }
